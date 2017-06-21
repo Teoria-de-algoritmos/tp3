@@ -8,7 +8,6 @@ def prediction(v):
 	return (buy, sell)
 
 valores = [1, 5, 4, 0.5, 4.5, 4, 1, 6, 9, 20, 0.1, 20]
-n = len(valores)
 buy, sell = prediction(valores)
 print "Buy time: " + str(buy)
 print "Sell time: " + str(sell)
