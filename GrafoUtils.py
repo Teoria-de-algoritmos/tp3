@@ -14,11 +14,11 @@ class Digrafo(object):
     # Inicializador
 	def __init__(self, vertices):
 		self.V = vertices
-		self.grafo = defaultdict(lambda:([],[])) #Diccionario default para almacenar el grafo como tuplas de dos listas
+		self.grafo = defaultdict(lambda:(set(),set())) #Diccionario default para almacenar el grafo como tuplas de dos listas
     # Funcion para agregar un elemento al grafo
 	def eje(self, u, v):
-	    self.grafo[u][0].append(v)
-	    self.grafo[v][1].append(u)
+	    self.grafo[u][0].add(v)
+	    self.grafo[v][1].add(u)
 
 	def vertices(self):
  		return self.V
