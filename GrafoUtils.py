@@ -1,26 +1,42 @@
-
-from collections import defaultdict    
+from collections import defaultdict 
+from random import seed, randint, choice   
 
 class Grafo(object):
-    # Inicializador
 	def __init__(self, vertices):
-		self.V = vertices
-		self.grafo = defaultdict(lambda:set()) #Diccionario default para almacenar el grafo como tuplas de dos listas
-    # Funcion para agregar un elemento al grafo
+		self.V = range(vertices)
+		self.grafo = defaultdict(lambda:defaultdict(int)) # grafo[u][v] = cant de aristas entre u y v
+		self.contraidos = defaultdict(list) # contraidos[v] = nodos que absorbio v
+
 	def eje(self, u, v):
-	    self.grafo[u].add(v)
-	    self.grafo[v].add(u)
+	    self.grafo[u][v] += 1
+	    self.grafo[v][u] += 1
 
 	def vertices(self):
  		return self.V
 
 	def vecinos(self, u):
 	    for v in self.grafo[u]:
-	        yield v
+	    	if self.grafo[u][v]:
+		        yield v
 
+	def contraer(self, u, v):
+		for w in self.grafo[v]:
+			if self.grafo[v][w] and	w != v and w != u:
+				self.grafo[u][w] += 1
+				self.grafo[w][u] += 1
+			self.grafo[w][v] = 0
+		self.grafo[v] = defaultdict(int)
+		self.contraidos[u].extend([v] + self.contraidos[v])
+		self.V.remove(v)
+
+	def ejeRandom(self):
+		return choice([(u, v) for v in self.V for u in self.grafo[v] for _ in xrange(self.grafo[u][v]) if u != v])
+
+	def getContraidos(self, u):
+		for v in self.contraidos[u]:
+			yield v
     
 def generarGrafoConexo(n): # n vertices, 2n aristas
-	from random import seed, randint
 	seed()
 	grafo = Grafo(n)
 	for v in xrange(1, n):
@@ -35,7 +51,6 @@ def generarGrafoConexo(n): # n vertices, 2n aristas
 
 def generarSubsetSum(n): # devuelve una tupla (gen_n, t) donde gen_n es un generador del conjunto
                          # y t es el valor a aproximar
-	from random import seed, randint
 	seed()
 	t = randint(10**8, 10**9)
 	return ((randint(1, t-1) for _ in xrange(n)), t) # me parecio mejor dejar un generador en vez de una lista
