@@ -13,13 +13,13 @@ def trim(l, e):
 			result.append(l[i])
 	return result
 
-def approxSubsetSum(S, t, epsilon):
+def approxSubsetSum(S, t, e):
 	from bisect import bisect_left
 	n = len(S)
 	L = {0: [0]}
 	for i in xrange(1, n+1):
 		L[i] = mergeLists(L[i-1], map(lambda x: x + S[i-1], L[i-1]))
-		L[i] = trim(L[i], epsilon / (2.0 * n))
+		L[i] = trim(L[i], e / (2.0 * n))
 		L[i] = L[i][:bisect_left(L[i], t) + 1]
 	return L[n][-1]
 
