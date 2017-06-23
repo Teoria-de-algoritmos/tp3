@@ -20,7 +20,7 @@ def approxSubsetSum(S, t, epsilon):
 	for i in xrange(1, n+1):
 		L[i] = mergeLists(L[i-1], map(lambda x: x + S[i-1], L[i-1]))
 		L[i] = trim(L[i], epsilon / (2.0 * n))
-		L[i] = L[i][:bisect_left(L[i], t)+1]
-	return max(L[n])
+		L[i] = L[i][:bisect_left(L[i], t) + 1]
+	return L[n][-1]
 
 print approxSubsetSum([1,3,5,6,8,9,14], 21, 0.5)
