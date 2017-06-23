@@ -9,13 +9,13 @@ def mergeLists(l1, l2):
 	return result
 
 def trim(l, e):
-	l2 = [l[0]]
+	result = [l[0]]
 	last = l[0]
 	for i in xrange(1, len(l)):
 		if l[i] > last * (1 + e):
-			l2.append(l[i])
+			result.append(l[i])
 			last = l[i]
-	return l2
+	return result
 
 def approxSubsetSum(S, t, e):
 	from bisect import bisect_left
