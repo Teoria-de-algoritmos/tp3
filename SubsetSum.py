@@ -10,11 +10,9 @@ def mergeLists(l1, l2):
 
 def trim(l, e):
 	result = [l[0]]
-	last = l[0]
 	for i in xrange(1, len(l)):
-		if l[i] > last * (1 + e):
+		if l[i] > result[-1] * (1 + e):
 			result.append(l[i])
-			last = l[i]
 	return result
 
 def approxSubsetSum(S, t, e):
